@@ -817,6 +817,14 @@
       padding: 3px 10px;
       min-width: 90px;
       text-align: right;
+      font-family: inherit;
+      cursor: text;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .input-value:focus {
+      border-color: var(--gold-400);
+      background: rgba(240, 192, 64, 0.18);
     }
 
     input[type="range"] {
@@ -1129,170 +1137,6 @@
     .btn-restart:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
 
     /* ── ARTICLES ── */
-    #articles {
-      padding: 96px 0;
-      background: var(--navy-800);
-    }
-
-    .articles-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 24px;
-      flex-wrap: wrap;
-      margin-bottom: 36px;
-    }
-
-    .articles-header-left {}
-
-    .filter-tabs {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 28px;
-    }
-
-    .filter-tab {
-      background: var(--navy-700);
-      color: var(--gray-300);
-      border: 1.5px solid rgba(255,255,255,0.08);
-      border-radius: 100px;
-      padding: 6px 16px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-    }
-    .filter-tab:hover { border-color: rgba(240,192,64,0.3); color: var(--white); }
-    .filter-tab.active {
-      background: rgba(240,192,64,0.12);
-      border-color: var(--gold-400);
-      color: var(--gold-400);
-    }
-
-    .articles-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .article-card {
-      background: var(--navy-700);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-    .article-card:hover {
-      border-color: rgba(240,192,64,0.2);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
-    }
-
-    .article-card.hidden { display: none; }
-
-    .article-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .article-tag {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 4px;
-    }
-    .tag-ato      { background: rgba(239,68,68,0.12);   color: #fca5a5; }
-    .tag-policy   { background: rgba(96,165,250,0.12);  color: #93c5fd; }
-    .tag-strategy { background: rgba(240,192,64,0.12);  color: var(--gold-300); }
-    .tag-market   { background: rgba(34,197,94,0.12);   color: #86efac; }
-    .tag-research { background: rgba(168,85,247,0.12);  color: #d8b4fe; }
-
-    .article-date {
-      font-size: 11px;
-      color: var(--gray-700);
-    }
-
-    .article-source {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--gray-500);
-    }
-
-    .source-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--gray-700);
-      flex-shrink: 0;
-    }
-
-    .article-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--white);
-      line-height: 1.4;
-      letter-spacing: -0.01em;
-    }
-
-    .article-excerpt {
-      font-size: 13px;
-      color: var(--gray-500);
-      line-height: 1.6;
-      flex: 1;
-    }
-
-    .article-read-more {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--gold-400);
-      margin-top: 4px;
-      opacity: 0;
-      transform: translateX(-4px);
-      transition: all 0.2s ease;
-    }
-    .article-card:hover .article-read-more {
-      opacity: 1;
-      transform: none;
-    }
-    .article-read-more svg { width: 12px; height: 12px; }
-
-    .articles-empty {
-      grid-column: 1/-1;
-      text-align: center;
-      padding: 48px;
-      color: var(--gray-500);
-      font-size: 15px;
-      display: none;
-    }
-    .articles-empty.show { display: block; }
-
-    @media (max-width: 960px) {
-      .articles-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .articles-grid { grid-template-columns: 1fr; }
-      .articles-header { flex-direction: column; align-items: flex-start; }
-    }
 
     /* ── ADVISER QUESTIONS ── */
     #adviser {
@@ -1390,7 +1234,6 @@
     /* Tablet */
     @media (max-width: 900px) {
       .calc-grid, .breakdown-grid { grid-template-columns: 1fr; gap: 28px; }
-      .articles-grid { grid-template-columns: repeat(2, 1fr); }
       #hero { padding: 80px 0 60px; }
 
       /* Comparison table — tighten at mid-widths so first column stays visible */
@@ -1417,7 +1260,7 @@
 
       /* Sections */
       #comparison, #cost-breakdown, #fund-fees,
-      #calculator, #quiz, #articles, #adviser { padding: 64px 0; }
+      #calculator, #quiz, #adviser { padding: 64px 0; }
 
       /* Fund table: hide % and bar columns, remove min-width so 2 cols fit */
       .fund-table th:nth-child(3),
@@ -1431,15 +1274,6 @@
 
       /* Fee comparison: single column */
       .fee-comparison { grid-template-columns: 1fr; }
-
-      /* Articles */
-      .articles-grid { grid-template-columns: 1fr; }
-      .filter-tabs {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
-      .filter-tab { text-align: center; }
 
       /* Adviser */
       .adviser-grid { grid-template-columns: 1fr; }
@@ -1478,8 +1312,7 @@
       .result-reasons { padding: 20px 16px; }
       .result-headline { font-size: 22px; }
 
-      /* Articles */
-      .article-card { padding: 18px; }
+
 
       /* Adviser */
       .adviser-card { padding: 20px; }
@@ -1494,7 +1327,6 @@
       .stat-value { font-size: 24px; }
       .balance-selector { flex-direction: column; }
       .balance-btn { width: 100%; text-align: center; }
-      .filter-tabs { grid-template-columns: 1fr; }
     }
 
     /* ── DATA FRESHNESS ── */
@@ -1944,7 +1776,6 @@
       <li><a href="#case-studies">Case Studies</a></li>
       <li><a href="#contributions">Caps</a></li>
       <li><a href="#glossary">Glossary</a></li>
-      <li><a href="#articles">News</a></li>
     </ul>
     <a href="#calculator" class="nav-cta">Try Calculator</a>
     <button class="nav-hamburger" id="hamburger" aria-label="Menu">
@@ -1953,7 +1784,6 @@
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="#comparison" onclick="closeMobileMenu()">Compare Side-by-Side</a>
-    <a href="#articles" onclick="closeMobileMenu()">News & Insights</a>
     <a href="#cost-breakdown" onclick="closeMobileMenu()">SMSF Cost Breakdown</a>
     <a href="#fund-fees" onclick="closeMobileMenu()">Fund Fee Data</a>
     <a href="#calculator" onclick="closeMobileMenu()">Fee Calculator</a>
@@ -2188,27 +2018,27 @@
       <div class="calc-inputs" data-animate data-animate-delay="1">
         <h3>Your Details</h3>
         <div class="input-group">
-          <div class="input-label"><span>Current super balance</span><span class="input-value" id="balanceDisplay">$250,000</span></div>
+          <div class="input-label"><span>Current super balance</span><input class="input-value" id="balanceDisplay" value="$250,000" inputmode="numeric" oninput="syncFromText('balance',this)" onblur="formatText('balance',this)"></div>
           <input type="range" id="balanceSlider" min="50000" max="2000000" step="10000" value="250000" oninput="updateCalc()">
         </div>
         <div class="input-group">
-          <div class="input-label"><span>Annual contributions</span><span class="input-value" id="contribDisplay">$10,000</span></div>
+          <div class="input-label"><span>Annual contributions</span><input class="input-value" id="contribDisplay" value="$10,000" inputmode="numeric" oninput="syncFromText('contrib',this)" onblur="formatText('contrib',this)"></div>
           <input type="range" id="contribSlider" min="0" max="50000" step="500" value="10000" oninput="updateCalc()">
         </div>
         <div class="input-group">
-          <div class="input-label"><span>Industry fund fee rate</span><span class="input-value" id="industryRateDisplay">0.85%</span></div>
+          <div class="input-label"><span>Industry fund fee rate</span><input class="input-value" id="industryRateDisplay" value="0.85%" inputmode="decimal" oninput="syncFromText('industryRate',this)" onblur="formatText('industryRate',this)"></div>
           <input type="range" id="industryRateSlider" min="0.2" max="2.5" step="0.05" value="0.85" oninput="updateCalc()">
         </div>
         <div class="input-group">
-          <div class="input-label"><span>Estimated SMSF annual cost</span><span class="input-value" id="smsfCostDisplay">$4,500</span></div>
+          <div class="input-label"><span>Estimated SMSF annual cost</span><input class="input-value" id="smsfCostDisplay" value="$4,500" inputmode="numeric" oninput="syncFromText('smsfCost',this)" onblur="formatText('smsfCost',this)"></div>
           <input type="range" id="smsfCostSlider" min="2000" max="12000" step="100" value="4500" oninput="updateCalc()">
         </div>
         <div class="input-group">
-          <div class="input-label"><span>Years to retirement</span><span class="input-value" id="yearsDisplay">15 yrs</span></div>
+          <div class="input-label"><span>Years to retirement</span><input class="input-value" id="yearsDisplay" value="15 yrs" inputmode="numeric" oninput="syncFromText('years',this)" onblur="formatText('years',this)"></div>
           <input type="range" id="yearsSlider" min="5" max="40" step="1" value="15" oninput="updateCalc()">
         </div>
         <div class="input-group">
-          <div class="input-label"><span>Average investment return</span><span class="input-value" id="returnDisplay">7.0%</span></div>
+          <div class="input-label"><span>Average investment return</span><input class="input-value" id="returnDisplay" value="7.0%" inputmode="decimal" oninput="syncFromText('return',this)" onblur="formatText('return',this)"></div>
           <input type="range" id="returnSlider" min="1" max="15" step="0.5" value="7" oninput="updateCalc()">
         </div>
       </div>
@@ -2343,31 +2173,6 @@
           <button class="btn-restart" onclick="restartQuiz()">← Start Over</button>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ARTICLES -->
-<section id="articles">
-  <div class="container">
-    <div class="articles-header">
-      <div class="articles-header-left" data-animate>
-        <div class="section-label">News & Insights</div>
-        <h2 class="section-title">SMSF & Super Updates</h2>
-        <p class="section-subtitle" style="margin-bottom:0">Curated articles on regulation, strategy, and policy changes affecting Australian superannuation.</p>
-        <div class="filter-tabs" id="filterTabs">
-          <button class="filter-tab active" onclick="filterArticles('all')">All</button>
-          <button class="filter-tab" onclick="filterArticles('ato')">ATO & Compliance</button>
-          <button class="filter-tab" onclick="filterArticles('policy')">Policy & Law</button>
-          <button class="filter-tab" onclick="filterArticles('strategy')">Strategy</button>
-          <button class="filter-tab" onclick="filterArticles('market')">Market</button>
-          <button class="filter-tab" onclick="filterArticles('research')">Research</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="articles-grid" id="articlesGrid">
-      <div class="articles-empty" id="articlesEmpty">No articles in this category.</div>
     </div>
   </div>
 </section>
@@ -2891,182 +2696,6 @@ const DATA_LAST_UPDATED = '2026-07-10'; // Update this date each month when you 
   }
 })();
 
-// ── ARTICLES ──
-const articles = [
-  {
-    tag: 'ato',
-    tagLabel: 'ATO & Compliance',
-    tagClass: 'tag-ato',
-    date: 'Jun 2025',
-    source: 'ATO',
-    title: 'ATO flags SMSF trustees over in-house asset breaches',
-    excerpt: 'The ATO has identified a significant number of SMSFs holding in-house assets above the 5% limit following market movements. Trustees are reminded of their obligation to rectify breaches promptly.',
-    url: 'https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/self-managed-super-funds-smsf',
-  },
-  {
-    tag: 'policy',
-    tagLabel: 'Policy & Law',
-    tagClass: 'tag-policy',
-    date: 'May 2025',
-    source: 'Treasury',
-    title: 'Division 296 tax: what a $3 million super cap means for high-balance members',
-    excerpt: 'The proposed 30% tax on earnings above $3 million in super — up from 15% — has cleared the Senate. Here\'s what it means for SMSF members with large balances and how unrealised gains will be treated.',
-    url: 'https://treasury.gov.au/programs-initiatives/superannuation',
-  },
-  {
-    tag: 'strategy',
-    tagLabel: 'Strategy',
-    tagClass: 'tag-strategy',
-    date: 'May 2025',
-    source: 'Firstlinks',
-    title: 'How to use carry-forward concessional contributions in your SMSF',
-    excerpt: 'Members with a super balance under $500K can access unused concessional cap space from the past five years. This strategy is particularly powerful for business owners with variable income or those returning to work.',
-    url: 'https://www.firstlinks.com.au',
-  },
-  {
-    tag: 'ato',
-    tagLabel: 'ATO & Compliance',
-    tagClass: 'tag-ato',
-    date: 'Apr 2025',
-    source: 'ATO',
-    title: '2024–25 contribution caps: concessional limit rises to $30,000',
-    excerpt: 'The concessional contributions cap has increased to $30,000 for 2024–25 (up from $27,500), while the non-concessional cap is now $120,000. Trustees should review members\' contribution strategies before 30 June.',
-    url: 'https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/growing-and-keeping-track-of-your-super/caps-on-super-contributions',
-  },
-  {
-    tag: 'research',
-    tagLabel: 'Research',
-    tagClass: 'tag-research',
-    date: 'Apr 2025',
-    source: 'ASIC',
-    title: 'ASIC report: SMSFs with balances under $200K show significantly worse outcomes',
-    excerpt: 'ASIC\'s latest review found that SMSFs with balances below $200,000 consistently underperform APRA-regulated funds after costs. The regulator is urging financial advisers to conduct proper cost-benefit analysis before recommending SMSF establishment.',
-    url: 'https://www.asic.gov.au/regulatory-resources/superannuation/',
-  },
-  {
-    tag: 'market',
-    tagLabel: 'Market',
-    tagClass: 'tag-market',
-    date: 'Mar 2025',
-    source: 'APRA',
-    title: 'APRA fund performance test: 4 MySuper products fail for second consecutive year',
-    excerpt: 'APRA\'s annual performance test has identified four underperforming MySuper products for the second year running. Members in these products will receive mandatory notification letters and should consider switching.',
-    url: 'https://www.apra.gov.au/superannuation-data-and-publications',
-  },
-  {
-    tag: 'strategy',
-    tagLabel: 'Strategy',
-    tagClass: 'tag-strategy',
-    date: 'Mar 2025',
-    source: 'Morningstar',
-    title: 'SMSF property lending: borrowing inside super explained',
-    excerpt: 'Limited Recourse Borrowing Arrangements (LRBAs) allow SMSFs to borrow to buy assets including property. But costs, risks, and concentration concerns are high. A detailed breakdown of the rules and pitfalls.',
-    url: 'https://www.morningstar.com.au',
-  },
-  {
-    tag: 'policy',
-    tagLabel: 'Policy & Law',
-    tagClass: 'tag-policy',
-    date: 'Feb 2025',
-    source: 'APRA',
-    title: 'Payday super: employer obligations shift from quarterly to per-payslip from 2026',
-    excerpt: 'From 1 July 2026, employers must pay super at the same time as wages rather than quarterly. The change will accelerate compounding for members and reduce the risk of unpaid super, but requires significant payroll system changes.',
-    url: 'https://www.apra.gov.au',
-  },
-  {
-    tag: 'market',
-    tagLabel: 'Market',
-    tagClass: 'tag-market',
-    date: 'Jan 2025',
-    source: 'ATO',
-    title: 'SMSF sector reaches $1 trillion in assets for first time',
-    excerpt: 'The ATO\'s latest SMSF annual statistical report shows the sector has crossed $1 trillion in total assets, with 603,000 funds managing retirement savings for around 1.1 million members — a record high.',
-    url: 'https://www.ato.gov.au/about-ato/research-and-statistics/in-detail/super-statistics/smsf/self-managed-super-fund-statistical-report',
-  },
-  {
-    tag: 'research',
-    tagLabel: 'Research',
-    tagClass: 'tag-research',
-    date: 'Dec 2024',
-    source: 'Vanguard',
-    title: 'How do SMSF investment returns compare to industry funds over 10 years?',
-    excerpt: 'Vanguard\'s analysis of ATO data shows that the median SMSF\'s 10-year return trails the median industry fund balanced option by 1.1% per annum after costs — a difference that compounds significantly at retirement.',
-    url: 'https://www.vanguard.com.au',
-  },
-  {
-    tag: 'strategy',
-    tagLabel: 'Strategy',
-    tagClass: 'tag-strategy',
-    date: 'Dec 2024',
-    source: 'Firstlinks',
-    title: 'Transfer Balance Cap to index to $2 million from 1 July 2025',
-    excerpt: 'The Transfer Balance Cap — the limit on how much you can move from accumulation to pension phase — will increase to $2 million. This affects SMSF pension planning strategies and requires a review of existing account-based pensions.',
-    url: 'https://www.firstlinks.com.au',
-  },
-  {
-    tag: 'ato',
-    tagLabel: 'ATO & Compliance',
-    tagClass: 'tag-ato',
-    date: 'Nov 2024',
-    source: 'ATO',
-    title: 'ATO increases scrutiny of SMSF related-party property transactions',
-    excerpt: 'The ATO is targeting SMSFs that purchase property from related parties at below-market values or that lease property back to members. Trustees are reminded that all related-party transactions must be conducted at arm\'s length.',
-    url: 'https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/self-managed-super-funds-smsf',
-  },
-];
-
-let activeFilter = 'all';
-
-function filterArticles(cat) {
-  activeFilter = cat;
-  document.querySelectorAll('.filter-tab').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(cat) || (cat === 'all' && btn.textContent === 'All'));
-  });
-  renderArticles();
-}
-
-function renderArticles() {
-  const grid = document.getElementById('articlesGrid');
-  const empty = document.getElementById('articlesEmpty');
-  const filtered = activeFilter === 'all' ? articles : articles.filter(a => a.tag === activeFilter);
-
-  // Remove old cards
-  grid.querySelectorAll('.article-card').forEach(c => c.remove());
-  empty.classList.toggle('show', filtered.length === 0);
-
-  const arrow = `<svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-
-  filtered.forEach((a, i) => {
-    const card = document.createElement('a');
-    card.href = a.url;
-    card.target = '_blank';
-    card.rel = 'noopener noreferrer';
-    card.className = 'article-card';
-    card.dataset.animate = '';
-    card.dataset.animateDelay = String((i % 3) + 1);
-    card.innerHTML = `
-      <div class="article-meta">
-        <span class="article-tag ${a.tagClass}">${a.tagLabel}</span>
-        <span class="article-date">${a.date}</span>
-      </div>
-      <div class="article-source">
-        <span class="source-dot"></span>
-        ${a.source}
-      </div>
-      <div class="article-title">${a.title}</div>
-      <div class="article-excerpt">${a.excerpt}</div>
-      <div class="article-read-more">Read article ${arrow}</div>
-    `;
-    grid.appendChild(card);
-    // Trigger animation on next frame
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      observer.observe(card);
-    }));
-  });
-}
-
-renderArticles();
-
 // ── NAV ──
 document.getElementById('hamburger').addEventListener('click', () => {
   document.getElementById('mobileMenu').classList.toggle('open');
@@ -3192,6 +2821,35 @@ function fmt(n) {
 
 let chartData = { smsfData: [], industryData: [], n: 10, padL: 0, padR: 0, padT: 0, padB: 0, chartW: 0, chartH: 0, barW: 0 };
 
+const calcConfig = {
+  balance:      { slider: 'balanceSlider',      min: 50000,  max: 2000000, fmt: v => fmt(v),                parse: s => +s.replace(/[^0-9.]/g,'') },
+  contrib:      { slider: 'contribSlider',       min: 0,      max: 50000,   fmt: v => fmt(v),                parse: s => +s.replace(/[^0-9.]/g,'') },
+  industryRate: { slider: 'industryRateSlider',  min: 0.2,    max: 2.5,     fmt: v => v.toFixed(2)+'%',      parse: s => +s.replace(/[^0-9.]/g,'') },
+  smsfCost:     { slider: 'smsfCostSlider',      min: 2000,   max: 12000,   fmt: v => fmt(v),                parse: s => +s.replace(/[^0-9.]/g,'') },
+  years:        { slider: 'yearsSlider',         min: 5,      max: 40,      fmt: v => v+' yrs',              parse: s => +s.replace(/[^0-9]/g,'') },
+  return:       { slider: 'returnSlider',        min: 1,      max: 15,      fmt: v => (+v).toFixed(1)+'%',   parse: s => +s.replace(/[^0-9.]/g,'') },
+};
+
+function syncFromText(key, el) {
+  const cfg = calcConfig[key];
+  const raw = cfg.parse(el.value);
+  if (isNaN(raw) || raw === 0) return;
+  const clamped = Math.min(cfg.max, Math.max(cfg.min, raw));
+  document.getElementById(cfg.slider).value = clamped;
+  updateCalc();
+}
+
+function formatText(key, el) {
+  const cfg = calcConfig[key];
+  const raw = cfg.parse(el.value);
+  const val = isNaN(raw) || raw === 0
+    ? +document.getElementById(cfg.slider).value
+    : Math.min(cfg.max, Math.max(cfg.min, raw));
+  document.getElementById(cfg.slider).value = val;
+  el.value = cfg.fmt(val);
+  updateCalc();
+}
+
 function updateCalc() {
   const balance   = +document.getElementById('balanceSlider').value;
   const contrib   = +document.getElementById('contribSlider').value;
@@ -3200,12 +2858,18 @@ function updateCalc() {
   const years     = +document.getElementById('yearsSlider').value;
   const ret       = +document.getElementById('returnSlider').value;
 
-  document.getElementById('balanceDisplay').textContent     = fmt(balance);
-  document.getElementById('contribDisplay').textContent     = fmt(contrib);
-  document.getElementById('industryRateDisplay').textContent = rate.toFixed(2) + '%';
-  document.getElementById('smsfCostDisplay').textContent    = fmt(smsfCost);
-  document.getElementById('yearsDisplay').textContent       = years + ' yrs';
-  document.getElementById('returnDisplay').textContent      = ret.toFixed(1) + '%';
+  if (document.activeElement !== document.getElementById('balanceDisplay'))
+    document.getElementById('balanceDisplay').value     = fmt(balance);
+  if (document.activeElement !== document.getElementById('contribDisplay'))
+    document.getElementById('contribDisplay').value     = fmt(contrib);
+  if (document.activeElement !== document.getElementById('industryRateDisplay'))
+    document.getElementById('industryRateDisplay').value = rate.toFixed(2) + '%';
+  if (document.activeElement !== document.getElementById('smsfCostDisplay'))
+    document.getElementById('smsfCostDisplay').value    = fmt(smsfCost);
+  if (document.activeElement !== document.getElementById('yearsDisplay'))
+    document.getElementById('yearsDisplay').value       = years + ' yrs';
+  if (document.activeElement !== document.getElementById('returnDisplay'))
+    document.getElementById('returnDisplay').value      = ret.toFixed(1) + '%';
 
   const industryFee = balance * (rate / 100);
   document.getElementById('smsfAnnualFee').textContent     = fmt(smsfCost);
