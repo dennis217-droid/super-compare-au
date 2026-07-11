@@ -548,6 +548,15 @@
     }
 
     .cell-content { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; width: 100%; }
+    .cell-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .cell-label-green  { color: var(--green-500); }
+    .cell-label-amber  { color: var(--amber-500); }
+    .cell-label-red    { color: var(--red-500); }
+    .cell-label-neutral { color: #60a5fa; }
 
     .badge {
       display: inline-block;
@@ -563,10 +572,7 @@
     .badge-red   { background: var(--red-100);   color: var(--red-800); }
     .badge-blue  { background: var(--blue-100);  color: var(--blue-800); }
 
-    .cell-green  { background: rgba(34, 197, 94, 0.06); }
-    .cell-amber  { background: rgba(245, 158, 11, 0.06); }
-    .cell-red    { background: rgba(239, 68,  68, 0.06); }
-    .cell-neutral { background: transparent; }
+    .cell-green, .cell-amber, .cell-red, .cell-neutral { background: transparent; }
 
     .scroll-hint {
       display: none;
@@ -1307,8 +1313,10 @@
       /* Fund table: hide % and bar columns, remove min-width so 2 cols fit */
       .fund-table th:nth-child(3),
       .fund-table th:nth-child(4),
+      .fund-table th:nth-child(5),
       .fund-table td:nth-child(3),
-      .fund-table td:nth-child(4) { display: none; }
+      .fund-table td:nth-child(4),
+      .fund-table td:nth-child(5) { display: none; }
       .fund-table { min-width: 0; width: 100%; }
       .fund-table-wrapper { overflow-x: hidden; }
       .fund-table td, .fund-table th { padding: 12px 16px; }
@@ -1336,12 +1344,48 @@
       .input-label { flex-direction: column; align-items: flex-start; gap: 6px; }
       .input-value { font-size: 13px; min-width: 0; }
 
-      /* Show table scroll hint */
-      .scroll-hint { display: block; }
-      /* Comparison table: tighter cells, allow first col to wrap */
-      td { padding: 14px 12px; }
-      th { padding: 14px 12px; }
-      td:first-child { white-space: normal; font-size: 12px; min-width: 90px; }
+      /* Comparison table: stacked card layout on small screens */
+      .table-wrapper { border: none; box-shadow: none; overflow: visible; }
+      .table-wrapper table, .table-wrapper thead, .table-wrapper tbody,
+      .table-wrapper th, .table-wrapper td, .table-wrapper tr { display: block; }
+      .table-wrapper table { min-width: 0; width: 100%; }
+      .table-wrapper thead { display: none; }
+      .table-wrapper tbody tr {
+        background: var(--navy-700);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: var(--radius-md);
+        margin-bottom: 12px;
+        padding: 0;
+      }
+      .table-wrapper tbody tr td:first-child {
+        background: var(--navy-600);
+        border-radius: var(--radius-md) var(--radius-md) 0 0;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--white);
+        padding: 10px 16px;
+        white-space: normal;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+      .table-wrapper tbody tr td:not(:first-child) {
+        padding: 12px 16px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+      }
+      .table-wrapper tbody tr td:not(:first-child)::before {
+        content: attr(data-label);
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--gray-500);
+        margin-bottom: 6px;
+        display: block;
+      }
+      .table-wrapper .cell-content { width: auto; }
+      /* hide separator rows on mobile */
+      .table-wrapper tr[style*="border-top:2px"] td[colspan] { display: none; }
+      .table-wrapper tr[style*="border-top:2px"] { display: none; }
 
       /* Cost breakdown */
       .cost-item { padding: 12px 14px; gap: 10px; }
@@ -1547,6 +1591,89 @@
     }
     .case-detail-item::before { content: '→'; color: var(--gold-400); flex-shrink: 0; }
     @media (max-width: 768px) { .case-grid { grid-template-columns: 1fr; } }
+
+    /* ── SMSF INVESTMENT UNIVERSE ── */
+    #smsf-investments {
+      padding: 96px 0;
+      background: var(--navy-900);
+    }
+    .invest-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .invest-card {
+      background: var(--navy-700);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .invest-card:hover { border-color: rgba(240,192,64,0.25); transform: translateY(-2px); }
+    .invest-icon { font-size: 28px; line-height: 1; }
+    .invest-name { font-size: 13px; font-weight: 700; color: var(--white); line-height: 1.3; }
+    .invest-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+    .invest-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .invest-tag-smsf  { background: rgba(240,192,64,0.15); color: var(--gold-400); }
+    .invest-tag-both  { background: rgba(34,197,94,0.12);  color: #86efac; }
+    .invest-tag-no    { background: rgba(239,68,68,0.12);   color: #fca5a5; }
+    .invest-note { font-size: 11px; color: var(--gray-500); line-height: 1.4; }
+    @media (max-width: 900px) { .invest-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px) { .invest-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 360px) { .invest-grid { grid-template-columns: 1fr; } }
+
+    /* ── 20-YEAR PROJECTION ── */
+    #projection {
+      padding: 96px 0;
+      background: var(--navy-800);
+    }
+    .projection-setup {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 32px 0 24px;
+      align-items: center;
+    }
+    .projection-setup-label { font-size: 13px; color: var(--gray-500); font-weight: 600; margin-right: 4px; }
+    .proj-canvas-wrap {
+      background: var(--navy-700);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .proj-legend { display: flex; gap: 24px; margin-bottom: 16px; }
+    .proj-legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--gray-300); }
+    .proj-legend-dot { width: 24px; height: 3px; border-radius: 2px; }
+    .proj-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .proj-stat {
+      background: var(--navy-700);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+    }
+    .proj-stat-value { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .proj-stat-label { font-size: 12px; color: var(--gray-500); line-height: 1.4; }
+    .proj-stat-smsf .proj-stat-value  { color: var(--gold-400); }
+    .proj-stat-ind .proj-stat-value   { color: #60a5fa; }
+    .proj-stat-diff .proj-stat-value  { color: #86efac; }
+    .proj-assumption { font-size: 12px; color: var(--gray-500); margin-top: 16px; line-height: 1.6; }
+    @media (max-width: 600px) { .proj-stats { grid-template-columns: 1fr; } }
 
     /* ── CONTRIBUTION CAPS ── */
     #contributions {
@@ -1816,6 +1943,8 @@
       <li><a href="#calculator">Calculator</a></li>
       <li><a href="#performance">Returns</a></li>
       <li><a href="#case-studies">Case Studies</a></li>
+      <li><a href="#smsf-investments">Investments</a></li>
+      <li><a href="#projection">Projection</a></li>
       <li><a href="#contributions">Caps</a></li>
       <li><a href="#glossary">Glossary</a></li>
     </ul>
@@ -1887,48 +2016,48 @@
         <tbody>
           <tr>
             <td>Who manages it</td>
-            <td class="cell-amber"><div class="cell-content"><div><span class="badge badge-amber">You</span><br><span style="font-size:13px;margin-top:6px;display:block">You are the trustee and bear all legal responsibility</span></div></div></td>
-            <td class="cell-green"><div class="cell-content"><div><span class="badge badge-green">Fund Trustees</span><br><span style="font-size:13px;margin-top:6px;display:block">Professional trustees manage compliance and investment decisions</span></div></div></td>
+            <td data-label="SMSF" class="cell-amber"><div class="cell-content"><div><span class="cell-label cell-label-amber">You</span><br><span style="font-size:13px;margin-top:6px;display:block">You are the trustee and bear all legal responsibility</span></div></div></td>
+            <td data-label="Industry Fund" class="cell-green"><div class="cell-content"><div><span class="cell-label cell-label-green">Fund Trustees</span><br><span style="font-size:13px;margin-top:6px;display:block">Professional trustees manage compliance and investment decisions</span></div></div></td>
           </tr>
           <tr>
             <td>Annual cost</td>
-            <td class="cell-amber"><div class="cell-content"><div><span class="badge badge-amber">Fixed ~$3,500–$6,000</span><br><span style="font-size:13px;margin-top:6px;display:block">Accounting, audit, ASIC fees; not tied to balance size</span></div></div></td>
-            <td class="cell-green"><div class="cell-content"><div><span class="badge badge-green">% of Balance ~0.4–1.2%</span><br><span style="font-size:13px;margin-top:6px;display:block">Scales with your balance; cheaper at low balances, expensive at high</span></div></div></td>
+            <td data-label="SMSF" class="cell-amber"><div class="cell-content"><div><span class="cell-label cell-label-amber">Fixed ~$3,500–$6,000</span><br><span style="font-size:13px;margin-top:6px;display:block">Accounting, audit, ASIC fees; not tied to balance size</span></div></div></td>
+            <td data-label="Industry Fund" class="cell-green"><div class="cell-content"><div><span class="cell-label cell-label-green">% of Balance ~0.4–1.2%</span><br><span style="font-size:13px;margin-top:6px;display:block">Scales with your balance; cheaper at low balances, expensive at high</span></div></div></td>
           </tr>
           <tr>
             <td>Investment control</td>
-            <td class="cell-green"><div class="cell-content"><div><span class="badge badge-green">Full control</span><br><span style="font-size:13px;margin-top:6px;display:block">Choose any compliant investment — stocks, bonds, property, crypto</span></div></div></td>
-            <td class="cell-amber"><div class="cell-content"><div><span class="badge badge-amber">Limited menu</span><br><span style="font-size:13px;margin-top:6px;display:block">Predefined options; some funds offer member-directed options</span></div></div></td>
+            <td data-label="SMSF" class="cell-green"><div class="cell-content"><div><span class="cell-label cell-label-green">Full control</span><br><span style="font-size:13px;margin-top:6px;display:block">Choose any compliant investment — stocks, bonds, property, crypto</span></div></div></td>
+            <td data-label="Industry Fund" class="cell-amber"><div class="cell-content"><div><span class="cell-label cell-label-amber">Limited menu</span><br><span style="font-size:13px;margin-top:6px;display:block">Predefined options; some funds offer member-directed options</span></div></div></td>
           </tr>
           <tr>
             <td>Direct property</td>
-            <td class="cell-green"><div class="cell-content"><div><span class="badge badge-green">Yes</span><br><span style="font-size:13px;margin-top:6px;display:block">Can hold residential &amp; commercial property (arm's length rules apply)</span></div></div></td>
-            <td class="cell-red"><div class="cell-content"><div><span class="badge badge-red">No</span><br><span style="font-size:13px;margin-top:6px;display:block">Cannot hold direct property; REITs available as an alternative</span></div></div></td>
+            <td data-label="SMSF" class="cell-green"><div class="cell-content"><div><span class="cell-label cell-label-green">Yes</span><br><span style="font-size:13px;margin-top:6px;display:block">Can hold residential &amp; commercial property (arm's length rules apply)</span></div></div></td>
+            <td data-label="Industry Fund" class="cell-red"><div class="cell-content"><div><span class="cell-label cell-label-red">No</span><br><span style="font-size:13px;margin-top:6px;display:block">Cannot hold direct property; REITs available as an alternative</span></div></div></td>
           </tr>
           <tr>
             <td>Insurance</td>
-            <td class="cell-red"><div class="cell-content"><div><span class="badge badge-red">Must arrange yourself</span><br><span style="font-size:13px;margin-top:6px;display:block">No default cover; may be harder or more expensive to obtain individually</span></div></div></td>
-            <td class="cell-green"><div class="cell-content"><div><span class="badge badge-green">Default cover included</span><br><span style="font-size:13px;margin-top:6px;display:block">Life, TPD, and income protection; group rates often cheaper</span></div></div></td>
+            <td data-label="SMSF" class="cell-red"><div class="cell-content"><div><span class="cell-label cell-label-red">Must arrange yourself</span><br><span style="font-size:13px;margin-top:6px;display:block">No default cover; may be harder or more expensive to obtain individually</span></div></div></td>
+            <td data-label="Industry Fund" class="cell-green"><div class="cell-content"><div><span class="cell-label cell-label-green">Default cover included</span><br><span style="font-size:13px;margin-top:6px;display:block">Life, TPD, and income protection; group rates often cheaper</span></div></div></td>
           </tr>
           <tr>
             <td>Compliance burden</td>
-            <td class="cell-red"><div class="cell-content"><div><span class="badge badge-red">High</span><br><span style="font-size:13px;margin-top:6px;display:block">Annual audit, ATO reporting, trustee obligations, ongoing legal duties</span></div></div></td>
-            <td class="cell-green"><div class="cell-content"><div><span class="badge badge-green">None for members</span><br><span style="font-size:13px;margin-top:6px;display:block">Trustees handle all regulatory and compliance obligations</span></div></div></td>
+            <td data-label="SMSF" class="cell-red"><div class="cell-content"><div><span class="cell-label cell-label-red">High</span><br><span style="font-size:13px;margin-top:6px;display:block">Annual audit, ATO reporting, trustee obligations, ongoing legal duties</span></div></div></td>
+            <td data-label="Industry Fund" class="cell-green"><div class="cell-content"><div><span class="cell-label cell-label-green">None for members</span><br><span style="font-size:13px;margin-top:6px;display:block">Trustees handle all regulatory and compliance obligations</span></div></div></td>
           </tr>
           <tr>
             <td>Minimum viable balance</td>
-            <td class="cell-amber"><div class="cell-content"><div><span class="badge badge-amber">~$250K–$500K</span><br><span style="font-size:13px;margin-top:6px;display:block">ASIC recommends considering costs carefully below $500K</span></div></div></td>
-            <td class="cell-green"><div class="cell-content"><div><span class="badge badge-green">No minimum</span><br><span style="font-size:13px;margin-top:6px;display:block">Suitable from day one of employment</span></div></div></td>
+            <td data-label="SMSF" class="cell-amber"><div class="cell-content"><div><span class="cell-label cell-label-amber">~$250K–$500K</span><br><span style="font-size:13px;margin-top:6px;display:block">ASIC recommends considering costs carefully below $500K</span></div></div></td>
+            <td data-label="Industry Fund" class="cell-green"><div class="cell-content"><div><span class="cell-label cell-label-green">No minimum</span><br><span style="font-size:13px;margin-top:6px;display:block">Suitable from day one of employment</span></div></div></td>
           </tr>
           <tr>
             <td>Regulator</td>
-            <td class="cell-neutral"><div class="cell-content"><div><span class="badge badge-blue">ATO</span><br><span style="font-size:13px;margin-top:6px;display:block">Australian Taxation Office regulates SMSFs</span></div></div></td>
-            <td class="cell-neutral"><div class="cell-content"><div><span class="badge badge-blue">APRA</span><br><span style="font-size:13px;margin-top:6px;display:block">Australian Prudential Regulation Authority</span></div></div></td>
+            <td data-label="SMSF" class="cell-neutral"><div class="cell-content"><div><span class="cell-label cell-label-neutral">ATO</span><br><span style="font-size:13px;margin-top:6px;display:block">Australian Taxation Office regulates SMSFs</span></div></div></td>
+            <td data-label="Industry Fund" class="cell-neutral"><div class="cell-content"><div><span class="cell-label cell-label-neutral">APRA</span><br><span style="font-size:13px;margin-top:6px;display:block">Australian Prudential Regulation Authority</span></div></div></td>
           </tr>
           <tr>
             <td>Ideal for</td>
-            <td class="cell-neutral"><div class="cell-content"><span style="font-size:13px">High-balance savers, property investors, business owners wanting maximum control over their retirement assets</span></div></td>
-            <td class="cell-neutral"><div class="cell-content"><span style="font-size:13px">Most Australians — especially those building wealth, wanting simplicity, or relying on default insurance cover</span></div></td>
+            <td data-label="SMSF" class="cell-neutral"><div class="cell-content"><div><span class="cell-label cell-label-amber">High-balance investors</span><br><span style="font-size:13px;margin-top:6px;display:block">High-balance savers, property investors, business owners wanting maximum control over their retirement assets</span></div></div></td>
+            <td data-label="Industry Fund" class="cell-neutral"><div class="cell-content"><div><span class="cell-label cell-label-green">Most Australians</span><br><span style="font-size:13px;margin-top:6px;display:block">Most Australians — especially those building wealth, wanting simplicity, or relying on default insurance cover</span></div></div></td>
           </tr>
         </tbody>
       </table>
@@ -2035,6 +2164,7 @@
             <th>Fund (Option)</th>
             <th>Annual Fee</th>
             <th>Fee %</th>
+            <th>vs. Industry Avg</th>
             <th>Visual</th>
           </tr>
         </thead>
@@ -2428,6 +2558,126 @@
           <div class="case-detail-item">Key risk: Division 296 tax will apply to earnings above $3M if balance grows further. Modelling is essential.</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- SMSF INVESTMENT UNIVERSE -->
+<section id="smsf-investments">
+  <div class="container">
+    <div data-animate>
+      <div class="section-eyebrow">Investment Flexibility</div>
+      <h2 class="section-title">What Can Your SMSF Invest In?</h2>
+      <p class="section-subtitle">SMSFs unlock a broader investment universe than any industry or retail super fund can offer. These asset classes are either unavailable or severely restricted in industry funds.</p>
+    </div>
+    <div class="invest-grid" data-animate>
+      <div class="invest-card">
+        <div class="invest-icon">🏠</div>
+        <div class="invest-name">Residential Property</div>
+        <div class="invest-tags">
+          <span class="invest-tag invest-tag-smsf">SMSF ✓</span>
+          <span class="invest-tag invest-tag-no">Industry ✗</span>
+        </div>
+        <div class="invest-note">Buy a rental property directly inside your super — rent, capital gains, all taxed at 15% (0% in pension phase).</div>
+      </div>
+      <div class="invest-card">
+        <div class="invest-icon">🏢</div>
+        <div class="invest-name">Commercial Property</div>
+        <div class="invest-tags">
+          <span class="invest-tag invest-tag-smsf">SMSF ✓</span>
+          <span class="invest-tag invest-tag-no">Industry ✗</span>
+        </div>
+        <div class="invest-note">Purchase your business premises inside your SMSF and pay rent to yourself — a popular strategy for small business owners.</div>
+      </div>
+      <div class="invest-card">
+        <div class="invest-icon">₿</div>
+        <div class="invest-name">Cryptocurrency</div>
+        <div class="invest-tags">
+          <span class="invest-tag invest-tag-smsf">SMSF ✓</span>
+          <span class="invest-tag invest-tag-no">Industry ✗</span>
+        </div>
+        <div class="invest-note">Legally hold Bitcoin, Ethereum and other crypto in your SMSF with ATO-compliant custody — gains taxed at 15% not 47%.</div>
+      </div>
+      <div class="invest-card">
+        <div class="invest-icon">🥇</div>
+        <div class="invest-name">Physical Gold & Precious Metals</div>
+        <div class="invest-tags">
+          <span class="invest-tag invest-tag-smsf">SMSF ✓</span>
+          <span class="invest-tag invest-tag-no">Industry ✗</span>
+        </div>
+        <div class="invest-note">Hold physical gold bars or coins in an approved vault — a true inflation hedge that industry funds cannot offer members.</div>
+      </div>
+      <div class="invest-card">
+        <div class="invest-icon">🏗️</div>
+        <div class="invest-name">Unlisted &amp; Private Equity</div>
+        <div class="invest-tags">
+          <span class="invest-tag invest-tag-smsf">SMSF ✓</span>
+          <span class="invest-tag invest-tag-no">Industry ✗</span>
+        </div>
+        <div class="invest-note">Invest directly in private companies, venture capital, or syndicated property deals — illiquid assets with premium returns.</div>
+      </div>
+      <div class="invest-card">
+        <div class="invest-icon">🖼️</div>
+        <div class="invest-name">Collectibles &amp; Art</div>
+        <div class="invest-tags">
+          <span class="invest-tag invest-tag-smsf">SMSF ✓</span>
+          <span class="invest-tag invest-tag-no">Industry ✗</span>
+        </div>
+        <div class="invest-note">Wine, art, coins, and stamps can be held in an SMSF under strict storage and insurance rules — they cannot be used by members.</div>
+      </div>
+      <div class="invest-card">
+        <div class="invest-icon">📋</div>
+        <div class="invest-name">Mortgage Lending (LRBA)</div>
+        <div class="invest-tags">
+          <span class="invest-tag invest-tag-smsf">SMSF ✓</span>
+          <span class="invest-tag invest-tag-no">Industry ✗</span>
+        </div>
+        <div class="invest-note">Borrow to buy assets via Limited Recourse Borrowing Arrangements — amplify returns using leverage inside the concessional tax environment.</div>
+      </div>
+      <div class="invest-card">
+        <div class="invest-icon">📈</div>
+        <div class="invest-name">ASX Shares &amp; ETFs</div>
+        <div class="invest-tags">
+          <span class="invest-tag invest-tag-both">SMSF ✓</span>
+          <span class="invest-tag invest-tag-both">Industry ✓</span>
+        </div>
+        <div class="invest-note">Both SMSFs and industry funds can hold listed shares and ETFs, but an SMSF lets you select exactly which stocks and build a tax-effective portfolio.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 20-YEAR PROJECTION -->
+<section id="projection">
+  <div class="container">
+    <div data-animate>
+      <div class="section-eyebrow">20-Year Case Study</div>
+      <h2 class="section-title">How SMSF Fee Savings Compound Over Time</h2>
+      <p class="section-subtitle">At higher balances, a fixed SMSF fee beats a percentage-based industry fund fee by a growing margin every year. See how the gap compounds over 20 years.</p>
+    </div>
+    <div data-animate>
+      <div class="proj-canvas-wrap">
+        <div class="proj-legend">
+          <div class="proj-legend-item"><div class="proj-legend-dot" style="background:var(--gold-400)"></div>SMSF ($4,500/yr fixed fee)</div>
+          <div class="proj-legend-item"><div class="proj-legend-dot" style="background:#60a5fa"></div>Industry Fund (0.85% p.a.)</div>
+        </div>
+        <canvas id="projChart" height="320" style="width:100%;display:block"></canvas>
+      </div>
+      <div class="proj-stats">
+        <div class="proj-stat proj-stat-smsf">
+          <div class="proj-stat-value" id="projSmsfFinal">—</div>
+          <div class="proj-stat-label">SMSF balance after 20 years</div>
+        </div>
+        <div class="proj-stat proj-stat-ind">
+          <div class="proj-stat-value" id="projIndFinal">—</div>
+          <div class="proj-stat-label">Industry fund balance after 20 years</div>
+        </div>
+        <div class="proj-stat proj-stat-diff">
+          <div class="proj-stat-value" id="projDiff">—</div>
+          <div class="proj-stat-label">Extra retirement savings with SMSF</div>
+        </div>
+      </div>
+      <p class="proj-assumption">Assumptions: $500,000 starting balance · $27,500 annual contributions · 8.7% gross return p.a. · SMSF annual cost $4,500 (fixed) · Industry fund MER 0.85% · All figures in today's dollars, pre-tax simplification for illustration only.</p>
     </div>
   </div>
 </section>
@@ -2827,24 +3077,36 @@ function renderFundTable() {
   const allFees = [...fundData.map(f => f.fees[activeBalIdx]), smsfCost];
   const maxFee = Math.max(...allFees);
 
+  const industryFees = fundData.map(f => f.fees[activeBalIdx]);
+  const avgFee = Math.round(industryFees.reduce((a, b) => a + b, 0) / industryFees.length);
+
   const rows = fundData.map(f => {
     const fee = f.fees[activeBalIdx];
     const pct = (fee / bal * 100).toFixed(2);
     const barW = Math.round(fee / maxFee * 100);
+    const diff = fee - avgFee;
+    const diffSign = diff > 0 ? '+' : '';
+    const diffColor = diff <= 0 ? '#86efac' : '#fca5a5';
+    const diffLabel = diff === 0 ? 'At avg' : `${diffSign}$${Math.abs(diff).toLocaleString('en-AU')}`;
+    const diffNote = diff < 0 ? 'below avg' : diff > 0 ? 'above avg' : '';
     return `<tr>
       <td><span class="fund-name">${f.name}</span><span class="fund-type-badge">Industry</span><br><span style="font-size:12px;color:var(--gray-500)">${f.option}</span></td>
       <td class="fee-cell">$${fee.toLocaleString('en-AU')}</td>
       <td>${pct}%</td>
+      <td style="text-align:right"><span style="font-weight:700;color:${diffColor}">${diffLabel}</span>${diffNote ? `<br><span style="font-size:11px;color:var(--gray-500)">${diffNote}</span>` : ''}</td>
       <td><div class="fee-bar-wrap"><div class="fee-mini-bar"><div class="fee-mini-fill" style="width:${barW}%"></div></div></div></td>
     </tr>`;
   });
 
+  const smsfDiff = smsfCost - avgFee;
+  const smsfDiffSign = smsfDiff > 0 ? '+' : '';
   const smsfPct = (smsfCost / bal * 100).toFixed(2);
   const smsfBarW = Math.round(smsfCost / maxFee * 100);
   rows.push(`<tr class="smsf-row">
     <td><span class="fund-name">SMSF (typical)</span><br><span style="font-size:12px;color:var(--gray-500)">Fixed annual all-in cost</span></td>
     <td class="fee-cell">$${smsfCost.toLocaleString('en-AU')}</td>
     <td>${smsfPct}%</td>
+    <td style="text-align:right"><span style="font-weight:700;color:#fca5a5">${smsfDiffSign}$${Math.abs(smsfDiff).toLocaleString('en-AU')}</span><br><span style="font-size:11px;color:var(--gray-500)">above avg</span></td>
     <td><div class="fee-bar-wrap"><div class="fee-mini-bar"><div class="fee-mini-fill" style="width:${smsfBarW}%;background:var(--gold-400)"></div></div></div></td>
   </tr>`);
 
@@ -3264,6 +3526,115 @@ function toggleCase(card) {
   document.querySelectorAll('.case-card').forEach(c => c.classList.remove('active'));
   if (!isActive) card.classList.add('active');
 }
+
+// ── 20-YEAR PROJECTION CHART ──
+function drawProjection() {
+  const canvas = document.getElementById('projChart');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  const W = rect.width || canvas.offsetWidth || 700;
+  const H = 320;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const startBal   = 500000;
+  const contrib    = 27500;
+  const grossRet   = 0.087;
+  const smsfFee    = 4500;
+  const indMER     = 0.0085;
+  const years      = 20;
+
+  const smsfBals = [startBal];
+  const indBals  = [startBal];
+  for (let y = 1; y <= years; y++) {
+    const prevS = smsfBals[y-1];
+    const prevI = indBals[y-1];
+    smsfBals.push((prevS + contrib) * (1 + grossRet) - smsfFee);
+    indBals.push((prevI + contrib) * (1 + grossRet) * (1 - indMER));
+  }
+
+  const maxVal = Math.max(...smsfBals, ...indBals);
+  const pad = { top: 24, right: 24, bottom: 40, left: 72 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top  - pad.bottom;
+
+  const toX = y => pad.left + (y / years) * cW;
+  const toY = v => pad.top  + cH - (v / maxVal) * cH;
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (i / 4) * cH;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cW, y); ctx.stroke();
+    const val = maxVal * (1 - i / 4);
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.font = '11px Inter, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText('$' + (val >= 1e6 ? (val/1e6).toFixed(1)+'M' : (val/1e3).toFixed(0)+'K'), pad.left - 8, y + 4);
+  }
+
+  // X axis labels
+  ctx.fillStyle = 'rgba(255,255,255,0.35)';
+  ctx.font = '11px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  [0, 5, 10, 15, 20].forEach(y => {
+    ctx.fillText('Yr ' + y, toX(y), H - pad.bottom + 16);
+  });
+
+  // Draw lines
+  const drawLine = (data, color) => {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.5;
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    data.forEach((v, i) => i === 0 ? ctx.moveTo(toX(i), toY(v)) : ctx.lineTo(toX(i), toY(v)));
+    ctx.stroke();
+  };
+
+  // Fill areas
+  const fillArea = (data, color) => {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    data.forEach((v, i) => i === 0 ? ctx.moveTo(toX(i), toY(v)) : ctx.lineTo(toX(i), toY(v)));
+    ctx.lineTo(toX(years), toY(0));
+    ctx.lineTo(toX(0), toY(0));
+    ctx.closePath();
+    ctx.fill();
+  };
+
+  fillArea(indBals,  'rgba(96,165,250,0.07)');
+  fillArea(smsfBals, 'rgba(240,192,64,0.07)');
+  drawLine(indBals,  '#60a5fa');
+  drawLine(smsfBals, '#F0C040');
+
+  // Final dot labels
+  const fmt = v => '$' + (v >= 1e6 ? (v/1e6).toFixed(2)+'M' : (v/1e3).toFixed(0)+'K');
+  ctx.font = 'bold 12px Inter, sans-serif';
+  ctx.textAlign = 'left';
+
+  const sY = toY(smsfBals[years]);
+  ctx.fillStyle = '#F0C040';
+  ctx.beginPath(); ctx.arc(toX(years), sY, 5, 0, Math.PI*2); ctx.fill();
+
+  const iY = toY(indBals[years]);
+  ctx.fillStyle = '#60a5fa';
+  ctx.beginPath(); ctx.arc(toX(years), iY, 5, 0, Math.PI*2); ctx.fill();
+
+  // Update stat cards
+  document.getElementById('projSmsfFinal').textContent = fmt(smsfBals[years]);
+  document.getElementById('projIndFinal').textContent  = fmt(indBals[years]);
+  const diff = smsfBals[years] - indBals[years];
+  document.getElementById('projDiff').textContent = '+' + fmt(diff);
+}
+
+window.addEventListener('load', drawProjection);
+window.addEventListener('resize', drawProjection);
 
 // ── CONTRIBUTION CAPS SG CALCULATOR ──
 function updateSG() {
