@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://supercompare.com.au/sitemap.xml
+Sitemap: https://mysuperchoices.com.au/sitemap.xml
